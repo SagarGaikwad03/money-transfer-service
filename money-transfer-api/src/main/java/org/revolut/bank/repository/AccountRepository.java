@@ -13,6 +13,7 @@ public class AccountRepository implements IAccountRepository {
 
 	private final Map<String, Account> accounts = new HashMap<String, Account>();
 
+	@Override
 	public Account createAccount(Account account) throws Exception {
 		if (accounts.containsKey(account.getAccountId()))
 			throw new AccountAlreadyExistsException(account.getAccountId());
@@ -20,6 +21,7 @@ public class AccountRepository implements IAccountRepository {
 		return account;
 	}
 
+	@Override
 	public Account updateAccount(Account account) throws Exception {
 		if (!accounts.containsKey(account.getAccountId()))
 			throw new AccountDoesNotExistsException(account.getAccountId());
@@ -31,13 +33,15 @@ public class AccountRepository implements IAccountRepository {
 		return account;
 	}
 
+	@Override
 	public Account getAccountById(String accountId) throws Exception {
 		if (!accounts.containsKey(accountId))
 			throw new AccountDoesNotExistsException(accountId);
 		return accounts.get(accountId);
 	}
 
-	public void withdrawMoney(Account account, BigDecimal amount) throws Exception {
+	@Override
+	public Account withdrawMoney(Account account, BigDecimal amount) throws Exception {
 		if (!accounts.containsKey(account.getAccountId()))
 			throw new AccountDoesNotExistsException(account.getAccountId());
 
@@ -46,9 +50,11 @@ public class AccountRepository implements IAccountRepository {
 				.currency(account.getCurrency()).createdAt(account.getCreatedAt()).updatedAt(LocalDateTime.now())
 				.build();
 		accounts.put(account.getAccountId(), updatedAccount);
+		return updatedAccount;
 	}
 
-	public void depositMoney(Account account, BigDecimal amount) throws Exception {
+	@Override
+	public Account depositMoney(Account account, BigDecimal amount) throws Exception {
 		if (!accounts.containsKey(account.getAccountId()))
 			throw new AccountDoesNotExistsException(account.getAccountId());
 
@@ -57,7 +63,7 @@ public class AccountRepository implements IAccountRepository {
 				.currency(account.getCurrency()).createdAt(account.getCreatedAt()).updatedAt(LocalDateTime.now())
 				.build();
 		accounts.put(account.getAccountId(), updatedAccount);
-
+		return updatedAccount;
 	}
 
 }

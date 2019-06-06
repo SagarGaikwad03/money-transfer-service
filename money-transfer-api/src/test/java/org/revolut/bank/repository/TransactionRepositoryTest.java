@@ -9,7 +9,7 @@ public class TransactionRepositoryTest {
 
 	@Before
 	public void setUp() {
-		transactionRepository = new TransactionRepository();
+		//transactionRepository = new TransactionRepository();
 	}
 
 	@Test
