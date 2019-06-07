@@ -8,13 +8,14 @@ import java.util.Map;
 import org.revolut.bank.dao.Account;
 import org.revolut.bank.exception.AccountAlreadyExistsException;
 import org.revolut.bank.exception.AccountDoesNotExistsException;
+import org.revolut.bank.exception.AccountLowBalanceException;
 
 public class AccountRepository implements IAccountRepository {
 
 	private final Map<String, Account> accounts = new HashMap<String, Account>();
 
 	@Override
-	public Account createAccount(Account account) throws Exception {
+	public Account createAccount(Account account) throws AccountDoesNotExistsException {
 		if (accounts.containsKey(account.getAccountId()))
 			throw new AccountAlreadyExistsException(account.getAccountId());
 		accounts.put(account.getAccountId(), account);
@@ -22,7 +23,7 @@ public class AccountRepository implements IAccountRepository {
 	}
 
 	@Override
-	public Account updateAccount(Account account) throws Exception {
+	public Account updateAccount(Account account) throws AccountDoesNotExistsException {
 		if (!accounts.containsKey(account.getAccountId()))
 			throw new AccountDoesNotExistsException(account.getAccountId());
 
@@ -34,7 +35,7 @@ public class AccountRepository implements IAccountRepository {
 	}
 
 	@Override
-	public Account getAccountById(String accountId) throws Exception {
+	public Account getAccountById(String accountId) throws AccountDoesNotExistsException {
 		if (!accounts.containsKey(accountId))
 			throw new AccountDoesNotExistsException(accountId);
 		return accounts.get(accountId);
@@ -44,6 +45,8 @@ public class AccountRepository implements IAccountRepository {
 	public Account withdrawMoney(Account account, BigDecimal amount) throws Exception {
 		if (!accounts.containsKey(account.getAccountId()))
 			throw new AccountDoesNotExistsException(account.getAccountId());
+		if (account.getBalance().compareTo(amount) < 0)
+			throw new AccountLowBalanceException(account.getAccountId());
 
 		final Account updatedAccount = Account.builder().accountId(account.getAccountId())
 				.userName(account.getUserName()).balance(account.getBalance().subtract(amount))

@@ -4,13 +4,14 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.Queue;
 import java.util.UUID;
 
+import org.eclipse.jetty.http.HttpStatus;
 import org.eclipse.jetty.util.StringUtil;
-import org.revolut.bank.dao.Account;
+import org.revolut.bank.dao.Response;
 import org.revolut.bank.dao.Transaction;
+import org.revolut.bank.exception.AccountDoesNotExistsException;
+import org.revolut.bank.exception.AccountLowBalanceException;
 import org.revolut.bank.repository.ITransactionRepository;
 
 import com.google.gson.Gson;
@@ -23,33 +24,44 @@ public class TransactionController {
 	public TransactionController(ITransactionRepository transactionRepository) {
 		post("/transfer", (request, response) -> {
 			response.type("application/json");
+			Response res;
 
 			try {
 				Transaction transaction = transactionRepository.createTransaction(transactionBuilder(request));
+				res = Response.builder().object(transaction).Status(HttpStatus.CREATED_201).build();
+
 				return new Gson().toJson(transaction);
 			} catch (Exception e) {
-				response.status(400);
-				response.body(e.getLocalizedMessage());
+				String errorMessage = e.getMessage();
+				if (e.getClass().isInstance(AccountDoesNotExistsException.class))
+					errorMessage = ((AccountDoesNotExistsException) e).getMessage();
+				else if (e.getClass().isInstance(AccountLowBalanceException.class))
+					errorMessage = ((AccountLowBalanceException) e).getMessage();
+
+				res = Response.builder().message(errorMessage).Status(HttpStatus.BAD_REQUEST_400).build();
+
 			}
-			return new Gson().toJson(request);
+			return new Gson().toJson(res);
 		});
 
 		get("/transaction", (request, response) -> {
 			response.type("application/json");
+			Response res;
 
 			try {
-				if (!StringUtil.isBlank(request.queryParams("transactionId"))) {
-					return new Gson()
-							.toJson(transactionRepository.getTransactionbyId(request.queryParams("transactionId")));
+				if (!StringUtil.isBlank(request.queryParams("transactionId")))
+					res = Response.builder()
+							.object(transactionRepository.getTransactionbyId(request.queryParams("transactionId")))
+							.Status(HttpStatus.OK_200).build();
 
-				} else
-					return new Gson().toJson(transactionRepository.getAllTransactions());
+				else
+					res = Response.builder().object(transactionRepository.getAllTransactions())
+							.Status(HttpStatus.OK_200).build();
 
 			} catch (Exception e) {
-				response.status(400);
-				response.body(e.getLocalizedMessage());
+				res = Response.builder().message(e.getMessage()).Status(HttpStatus.BAD_REQUEST_400).build();
 			}
-			return new Gson().toJson(request);
+			return new Gson().toJson(res);
 		});
 	}
 

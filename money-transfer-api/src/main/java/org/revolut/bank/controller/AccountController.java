@@ -5,7 +5,12 @@ import static spark.Spark.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import org.eclipse.jetty.http.HttpStatus;
 import org.revolut.bank.dao.Account;
+import org.revolut.bank.dao.Response;
+import org.revolut.bank.exception.AccountDoesNotExistsException;
+import org.revolut.bank.exception.AccountLowBalanceException;
 import org.revolut.bank.repository.IAccountRepository;
 
 import com.google.gson.Gson;
@@ -21,19 +26,22 @@ public class AccountController {
 
 		post("/account", (request, response) -> {
 			response.type("application/json");
-
+			Response res;
 			try {
-				return new Gson().toJson(accountRepository.createAccount(accountBuilder(request)));
+				Account account = accountRepository.createAccount(accountBuilder(request));
+				res = Response.builder().object(account).Status(HttpStatus.CREATED_201).build();
 			} catch (Exception e) {
-				response.status(400);
-				response.body(e.getLocalizedMessage());
+				String errorMessage = e.getMessage();
+				if (e.getClass().isInstance(AccountDoesNotExistsException.class))
+					errorMessage = ((AccountDoesNotExistsException) e).getMessage();
+				res = Response.builder().message(errorMessage).Status(HttpStatus.BAD_REQUEST_400).build();
 			}
-			return new Gson().toJson(request);
+			return new Gson().toJson(res);
 		});
 
 		put("/account", (request, response) -> {
 			response.type("application/json");
-
+			Response res;
 			try {
 				Account account = accountRepository.getAccountById(request.queryParams("accountId"));
 				BigDecimal amount = new BigDecimal(request.queryParams("amount"));
@@ -42,26 +50,33 @@ public class AccountController {
 					account = accountRepository.depositMoney(account, amount);
 				else if (WITHDRAW.equalsIgnoreCase(request.queryParams("transaction")))
 					account = accountRepository.withdrawMoney(account, amount);
-
-				return new Gson().toJson(account);
+				res = Response.builder().object(account).Status(HttpStatus.CREATED_201).build();
 			} catch (Exception e) {
-				response.status(400);
-				response.body(e.getLocalizedMessage());
+				String errorMessage = e.getMessage();
+				if (e.getClass().isInstance(AccountDoesNotExistsException.class))
+					errorMessage = ((AccountDoesNotExistsException) e).getMessage();
+				else if (e.getClass().isInstance(AccountLowBalanceException.class))
+					errorMessage = ((AccountLowBalanceException) e).getMessage();
+				res = Response.builder().message(errorMessage).Status(HttpStatus.BAD_REQUEST_400).build();
 			}
-			return new Gson().toJson(request);
+			return new Gson().toJson(res);
 		});
 
 		get("/account", (request, response) -> {
 			response.type("application/json");
+			Response res;
 
 			try {
 				Account account = accountRepository.getAccountById(request.queryParams("accountId"));
-				return new Gson().toJson(account);
+				res = Response.builder().object(account).Status(HttpStatus.OK_200).build();
 			} catch (Exception e) {
-				response.status(400);
-				response.body(e.getLocalizedMessage());
+				String errorMessage = e.getMessage();
+				if (e.getClass().isInstance(AccountDoesNotExistsException.class))
+					errorMessage = ((AccountDoesNotExistsException) e).getMessage();
+				res = Response.builder().message(errorMessage).Status(HttpStatus.BAD_REQUEST_400).build();
+
 			}
-			return new Gson().toJson(request);
+			return new Gson().toJson(res);
 		});
 
 	}
