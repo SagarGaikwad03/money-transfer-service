@@ -12,14 +12,11 @@ import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.revolut.bank.dao.Account;
 import org.revolut.bank.dao.Transaction;
 import org.revolut.bank.exception.AccountDoesNotExistsException;
 import org.revolut.bank.exception.AccountLowBalanceException;
 
-@RunWith(MockitoJUnitRunner.class)
 public class TransactionRepositoryTest {
 
 	private ITransactionRepository transactionRepository;

@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.revolut.bank.repository.AccountRepository;
 import org.revolut.bank.repository.IAccountRepository;
 
@@ -17,7 +15,6 @@ import com.despegar.sparkjava.test.SparkServer;
 
 import spark.servlet.SparkApplication;
 
-@RunWith(MockitoJUnitRunner.class)
 public class AccountControllerTest {
 
 	public static class AccountControllerTestSpark implements SparkApplication {

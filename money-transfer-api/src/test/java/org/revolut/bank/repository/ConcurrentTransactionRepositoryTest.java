@@ -13,14 +13,11 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.revolut.bank.dao.Account;
 import org.revolut.bank.dao.Transaction;
 
 import net.jodah.concurrentunit.Waiter;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ConcurrentTransactionRepositoryTest {
 
 	private ITransactionRepository transactionRepository;
