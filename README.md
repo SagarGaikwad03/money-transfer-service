@@ -35,7 +35,26 @@ Host: localhost:4567
 ```json
 {"object":{"accountId":"73df405e-7fe9-4d4a-82ee-f7a3bf34026f","userName":"Account holder 1","balance":1000,"currency":"INR","createdAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":24,"second":0,"nano":584000000}},"updatedAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":24,"second":0,"nano":584000000}},"lock":{"sync":{"state":0}}},"Status":201}
 ```
-Create Account                                                                                                                            POST - http://localhost:4567/account                                                                                                      Post body Sample - {"userName":"Sagar Gaikwad","balance":1000,"currency":"INR"}
+
+### Transfer amount between account
+
+```
+http://localhost:4567/transfer
+```
+
+* HTTP Request:
+```json
+POST /transfer HTTP/1.1
+Accept: application/json
+Host: localhost:4567
+
+{"fromAccountId":"73df405e-7fe9-4d4a-82ee-f7a3bf34026f","toAccountId":"9dada52d-23f6-495c-b60f-a0921aa9943f","amount":"500"}
+```
+
+* HTTP Response:
+```json
+{"object":{"transactionId":"75706d49-889a-47bf-a640-380cdc42bb9a","fromAccountId":"73df405e-7fe9-4d4a-82ee-f7a3bf34026f","toAccountId":"9dada52d-23f6-495c-b60f-a0921aa9943f","amount":500,"createdAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":45,"second":41,"nano":906000000}},"inProcess":{"value":0}},"Status":201}
+```
 
 Get Account
 GET - http://localhost:4567/account?accountId={accountId}
