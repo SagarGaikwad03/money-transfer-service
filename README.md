@@ -26,7 +26,7 @@ Standalone service for money transfer between account.
   - Repository unit test
   - End point unit test
   - Concurrent transaction test for 3 threads
-
+```
 ## Command to run jar
 - java -jar ".\target\money-transfer-api.jar"
 
