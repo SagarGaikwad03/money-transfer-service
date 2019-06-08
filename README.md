@@ -104,6 +104,9 @@ Query Param: accountId=73df405e-7fe9-4d4a-82ee-f7a3bf34026f&amount=75&transactio
 {"object":{"accountId":"73df405e-7fe9-4d4a-82ee-f7a3bf34026f","userName":"Account holder 1","balance":425,"currency":"INR","createdAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":24,"second":0,"nano":584000000}},"updatedAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":52,"second":8,"nano":885000000}},"lock":{"sync":{"state":0}}},"Status":201}
 ```
 
+### Update(Deposit) Account
+PUT - http://localhost:4567/account?accountId={accountId}&amount={amount}&transaction=Deposite
+
 ### Delete Account
 DELETE - http://localhost:4567/account?accountId={accountId}
 
