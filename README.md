@@ -14,7 +14,7 @@ Standalone service for money transfer between account.
 - java -jar ".\target\money-transfer-api.jar"
 
 ## Services
-Create Account
+Create Account \n
 POST - http://localhost:4567/account
 Post body Sample - {"userName":"Sagar Gaikwad","balance":1000,"currency":"INR"}
 
