@@ -14,6 +14,27 @@ Standalone service for money transfer between account.
 - java -jar ".\target\money-transfer-api.jar"
 
 ## Services
+## Endpoints:
+### Create accounts
+
+```
+http://localhost:4567/account
+```
+
+* HTTP Request:
+```json
+POST /account HTTP/1.1
+Accept: application/json
+Host: localhost:4567
+
+{"userName":"Account holder 1","balance":1000,"currency":"INR"}
+
+```
+
+* HTTP Response:
+```json
+{"object":{"accountId":"73df405e-7fe9-4d4a-82ee-f7a3bf34026f","userName":"Account holder 1","balance":1000,"currency":"INR","createdAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":24,"second":0,"nano":584000000}},"updatedAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":24,"second":0,"nano":584000000}},"lock":{"sync":{"state":0}}},"Status":201}
+```
 Create Account                                                                                                                            POST - http://localhost:4567/account                                                                                                      Post body Sample - {"userName":"Sagar Gaikwad","balance":1000,"currency":"INR"}
 
 Get Account
