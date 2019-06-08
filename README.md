@@ -11,12 +11,12 @@ Standalone service for money transfer between account.
 - Delete account
 
 ## Technology stack
-- Java 8[Java 8](https://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
-- Maven
-- Spark Framework
-- Lombok
+- [Java 8](https://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
+- [Maven](https://en.wikipedia.org/wiki/Apache_Maven)
+- [Spark Framework](https://en.wikipedia.org/wiki/Apache_Spark)
+- [Lombok](https://www.baeldung.com/intro-to-project-lombok)
 - GSON
-- JUnit
+- [JUnit](https://en.wikipedia.org/wiki/JUnit)
 - Spark Test
 
 ## Build and Unit test
