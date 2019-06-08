@@ -55,19 +55,49 @@ Host: localhost:4567
 ```json
 {"object":{"transactionId":"75706d49-889a-47bf-a640-380cdc42bb9a","fromAccountId":"73df405e-7fe9-4d4a-82ee-f7a3bf34026f","toAccountId":"9dada52d-23f6-495c-b60f-a0921aa9943f","amount":500,"createdAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":45,"second":41,"nano":906000000}},"inProcess":{"value":0}},"Status":201}
 ```
+### Get accounts
 
-Get Account
-GET - http://localhost:4567/account?accountId={accountId}
+```
+http://localhost:4567/account?accountId=73df405e-7fe9-4d4a-82ee-f7a3bf34026f
+```
 
-Update Account (Deposit/Withdraw)
-PUT - http://localhost:4567/account?accountId={accountId}&amount={amount}&transaction={Deposite}
+* HTTP Request:
+```json
+GET /account HTTP/1.1
+Accept: application/json
+Host: localhost:4567
+Query Param: accountId=73df405e-7fe9-4d4a-82ee-f7a3bf34026f
+```
+
+* HTTP Response:
+```json
+{"object":{"accountId":"73df405e-7fe9-4d4a-82ee-f7a3bf34026f","userName":"Account holder 1","balance":500,"currency":"INR","createdAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":24,"second":0,"nano":584000000}},"updatedAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":45,"second":41,"nano":906000000}},"lock":{"sync":{"state":0}}},"Status":200}
+```
+
+### Update (Withdraw) accounts
+
+```
+http://localhost:4567/account?accountId=73df405e-7fe9-4d4a-82ee-f7a3bf34026f&amount=75&transaction=Withdraw
+```
+
+* HTTP Request:
+```json
+PUT /account HTTP/1.1
+Accept: application/json
+Host: localhost:4567
+Query Param: accountId=73df405e-7fe9-4d4a-82ee-f7a3bf34026f
+             amount=75
+             transaction=Withdraw
+```
+
+* HTTP Response:
+```json
+{"object":{"accountId":"73df405e-7fe9-4d4a-82ee-f7a3bf34026f","userName":"Account holder 1","balance":425,"currency":"INR","createdAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":24,"second":0,"nano":584000000}},"updatedAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":52,"second":8,"nano":885000000}},"lock":{"sync":{"state":0}}},"Status":201}
+```
+
 
 Delete Account
 DELETE - http://localhost:4567/account?accountId={accountId}
-
-Transfer Money
-POST - http://localhost:4567/transfer
-Post body sample - {"fromAccountId":"e447ac53-4765-4ac6-846a-6a1822b36238","toAccountId":"f04b8a02-9551-48d0-b995-d0fe5fd49a49","amount":"5000"}
 
 Get Transaction
 GET - http://localhost:4567/transaction?transactionId={transactionId}
