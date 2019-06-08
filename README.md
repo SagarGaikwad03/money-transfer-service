@@ -1,5 +1,14 @@
-# RESTful API for money transfer between accounts
+# Standalone RESTful API for money transfer between accounts
 Standalone service for money transfer between account.
+
+## Feature
+- Create Account
+- Get account
+- Withdraw money
+- Deposit money
+- Transfer money between account
+- Get single/all transaction
+- Delete account
 
 ## Technology stack
 - Java 8
@@ -10,11 +19,13 @@ Standalone service for money transfer between account.
 - JUnit
 - Spark Test
 
+## Build and Unit test
+- mvn clean install
+
 ## Command to run jar
 - java -jar ".\target\money-transfer-api.jar"
 
-## Services
-## Endpoints:
+## Endpoints
 ### Create accounts
 
 ```
@@ -93,15 +104,11 @@ Query Param: accountId=73df405e-7fe9-4d4a-82ee-f7a3bf34026f&amount=75&transactio
 {"object":{"accountId":"73df405e-7fe9-4d4a-82ee-f7a3bf34026f","userName":"Account holder 1","balance":425,"currency":"INR","createdAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":24,"second":0,"nano":584000000}},"updatedAt":{"date":{"year":2019,"month":6,"day":8},"time":{"hour":13,"minute":52,"second":8,"nano":885000000}},"lock":{"sync":{"state":0}}},"Status":201}
 ```
 
-
-Delete Account
+### Delete Account
 DELETE - http://localhost:4567/account?accountId={accountId}
 
-Get Transaction
+### Get Transaction
 GET - http://localhost:4567/transaction?transactionId={transactionId}
 
-List Transactions
+### List Transactions
 GET - http://localhost:4567/transaction
-
-
-
