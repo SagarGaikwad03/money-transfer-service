@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jetty.util.StringUtil;
 import org.revolut.bank.dao.Account;
 import org.revolut.bank.exception.AccountAlreadyExistsException;
 import org.revolut.bank.exception.AccountDoesNotExistsException;
 import org.revolut.bank.exception.AccountLowBalanceException;
+import org.revolut.bank.exception.AccountNumberBlankOrEmptyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,6 +84,18 @@ public class AccountRepository implements IAccountRepository {
 				.build();
 		accounts.put(account.getAccountId(), updatedAccount);
 		return updatedAccount;
+	}
+	
+	@Override
+	public void delete(String accountId) throws Exception {
+		LOGGER.info("Delete account");
+		if(StringUtil.isBlank(accountId))
+			throw new AccountNumberBlankOrEmptyException();
+		
+		if (!accounts.containsKey(accountId))
+			throw new AccountDoesNotExistsException(accountId);
+
+		accounts.remove(accountId);
 	}
 
 }

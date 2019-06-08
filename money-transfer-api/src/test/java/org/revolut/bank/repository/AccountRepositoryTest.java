@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.revolut.bank.dao.Account;
 import org.revolut.bank.exception.AccountDoesNotExistsException;
 import org.revolut.bank.exception.AccountLowBalanceException;
+import org.revolut.bank.exception.AccountNumberBlankOrEmptyException;
 
 /*
  * @Author : Sagar Gaikwad
@@ -72,6 +73,24 @@ public class AccountRepositoryTest {
 		BigDecimal amount = new BigDecimal("5000");
 		accountRepository.createAccount(account);
 		accountRepository.withdrawMoney(account, amount);
+	}
+	
+	@Test(expected = AccountNumberBlankOrEmptyException.class)
+	public void testDeleteAccountWithoutAccountId() throws Exception {	
+		accountRepository.delete("");
+	}
+	
+	@Test(expected = AccountDoesNotExistsException.class)
+	public void testDeleteAccountWithInvalidAccountId() throws Exception {	
+		accountRepository.delete("invalidId");
+	}
+	
+	@Test(expected = AccountDoesNotExistsException.class)
+	public void testDeleteAccount() throws Exception {	
+		Account account = createAccount();
+		accountRepository.createAccount(account);
+		accountRepository.delete(account.getAccountId());
+		accountRepository.getAccountById(account.getAccountId());
 	}
 
 	private Account createAccount() {

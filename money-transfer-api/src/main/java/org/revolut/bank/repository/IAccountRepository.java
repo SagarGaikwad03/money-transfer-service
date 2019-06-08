@@ -3,7 +3,6 @@ package org.revolut.bank.repository;
 import java.math.BigDecimal;
 
 import org.revolut.bank.dao.Account;
-import org.revolut.bank.exception.AccountDoesNotExistsException;
 
 /*
  * @Author : Sagar Gaikwad
@@ -22,4 +21,7 @@ public interface IAccountRepository {
 	Account withdrawMoney(Account account, BigDecimal amount) throws Exception;
 
 	Account depositMoney(Account account, BigDecimal amount) throws Exception;
+	
+	void delete(String accountId) throws Exception;
+
 }

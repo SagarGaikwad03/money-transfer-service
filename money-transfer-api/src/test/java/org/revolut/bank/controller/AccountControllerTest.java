@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.revolut.bank.repository.AccountRepository;
 import org.revolut.bank.repository.IAccountRepository;
 
+import com.despegar.http.client.DeleteMethod;
 import com.despegar.http.client.GetMethod;
 import com.despegar.http.client.HttpResponse;
 import com.despegar.http.client.PostMethod;
@@ -61,6 +62,14 @@ public class AccountControllerTest {
 	@Test
 	public void testAccountWithdrawService() throws Exception {
 		PutMethod request = testServer.put("/account?accountId=1&transaction=Withdraw&amount=500", "", false);
+
+		HttpResponse httpResponse = testServer.execute(request);
+		assertEquals(200, httpResponse.code());
+	}
+	
+	@Test
+	public void testAccountDeleteervice() throws Exception {
+		DeleteMethod request = testServer.delete("/account?accountId=1", false);
 
 		HttpResponse httpResponse = testServer.execute(request);
 		assertEquals(200, httpResponse.code());
