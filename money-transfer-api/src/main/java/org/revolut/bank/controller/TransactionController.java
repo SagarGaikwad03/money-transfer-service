@@ -18,20 +18,32 @@ import com.google.gson.Gson;
 
 import spark.Request;
 
+/*
+ * @Author : Sagar Gaikwad
+ * @Created On 8/06/2019
+ * 
+ * Transaction Service
+ * */
 public class TransactionController {
 
 	@SuppressWarnings("static-access")
 	public TransactionController(ITransactionRepository transactionRepository) {
+		/**
+	     * Transfer Money
+	     * @param - transaction
+	     * @return custom response
+	     * */
 		post("/transfer", (request, response) -> {
 			response.type("application/json");
 			Response res;
 
 			try {
 				Transaction transaction = transactionRepository.createTransaction(transactionBuilder(request));
+				
 				res = Response.builder().object(transaction).Status(HttpStatus.CREATED_201).build();
 
-				return new Gson().toJson(transaction);
 			} catch (Exception e) {
+				
 				String errorMessage = e.getMessage();
 				if (e.getClass().isInstance(AccountDoesNotExistsException.class))
 					errorMessage = ((AccountDoesNotExistsException) e).getMessage();
@@ -44,6 +56,11 @@ public class TransactionController {
 			return new Gson().toJson(res);
 		});
 
+		/**
+	     * Find Transaction
+	     * @param - transactionId
+	     * @return custom response
+	     * */
 		get("/transaction", (request, response) -> {
 			response.type("application/json");
 			Response res;

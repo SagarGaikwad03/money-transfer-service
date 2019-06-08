@@ -8,6 +8,12 @@ import java.util.concurrent.locks.ReentrantLock;
 import lombok.Builder;
 import lombok.Data;
 
+/*
+ * @Author : Sagar Gaikwad
+ * @Created On 8/06/2019
+ * 
+ * Account Model
+ * */
 @Data
 @Builder
 public class Account {

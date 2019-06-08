@@ -5,6 +5,12 @@ import java.math.BigDecimal;
 import org.revolut.bank.dao.Account;
 import org.revolut.bank.exception.AccountDoesNotExistsException;
 
+/*
+ * @Author : Sagar Gaikwad
+ * @Created On 8/06/2019
+ * 
+ * Account Repository Interface
+ * */
 public interface IAccountRepository {
 
 	Account createAccount(Account account) throws Exception;

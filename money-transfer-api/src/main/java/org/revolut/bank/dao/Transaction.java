@@ -7,6 +7,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import lombok.Builder;
 import lombok.Data;
 
+/*
+ * @Author : Sagar Gaikwad
+ * @Created On 8/06/2019
+ * 
+ * Transaction Model
+ * */
 @Data
 @Builder
 public class Transaction {

@@ -9,13 +9,25 @@ import org.revolut.bank.dao.Account;
 import org.revolut.bank.exception.AccountAlreadyExistsException;
 import org.revolut.bank.exception.AccountDoesNotExistsException;
 import org.revolut.bank.exception.AccountLowBalanceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/*
+ * @Author : Sagar Gaikwad
+ * @Created On 8/06/2019
+ * 
+ * Account Repository Implementation
+ * */
 public class AccountRepository implements IAccountRepository {
+	
+	private Logger LOGGER = LoggerFactory.getLogger(AccountRepository.class);
+
 
 	private final Map<String, Account> accounts = new HashMap<String, Account>();
 
 	@Override
 	public Account createAccount(Account account) throws AccountDoesNotExistsException {
+		LOGGER.info("Create account");
 		if (accounts.containsKey(account.getAccountId()))
 			throw new AccountAlreadyExistsException(account.getAccountId());
 		accounts.put(account.getAccountId(), account);
@@ -24,6 +36,7 @@ public class AccountRepository implements IAccountRepository {
 
 	@Override
 	public Account updateAccount(Account account) throws AccountDoesNotExistsException {
+		LOGGER.info("Update account");
 		if (!accounts.containsKey(account.getAccountId()))
 			throw new AccountDoesNotExistsException(account.getAccountId());
 
@@ -43,9 +56,10 @@ public class AccountRepository implements IAccountRepository {
 
 	@Override
 	public Account withdrawMoney(Account account, BigDecimal amount) throws Exception {
+		LOGGER.info("Withdraw transaction");
 		if (!accounts.containsKey(account.getAccountId()))
 			throw new AccountDoesNotExistsException(account.getAccountId());
-		if (account.getBalance().compareTo(amount) < 0)
+		if (account.getBalance().compareTo(amount) < 0) // Check if account have enough balance
 			throw new AccountLowBalanceException(account.getAccountId());
 
 		final Account updatedAccount = Account.builder().accountId(account.getAccountId())
@@ -58,6 +72,7 @@ public class AccountRepository implements IAccountRepository {
 
 	@Override
 	public Account depositMoney(Account account, BigDecimal amount) throws Exception {
+		LOGGER.info("Deposit transaction");
 		if (!accounts.containsKey(account.getAccountId()))
 			throw new AccountDoesNotExistsException(account.getAccountId());
 

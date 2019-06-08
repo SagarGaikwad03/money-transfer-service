@@ -6,6 +6,12 @@ import org.revolut.bank.repository.AccountRepository;
 import org.revolut.bank.repository.IAccountRepository;
 import org.revolut.bank.repository.TransactionRepository;
 
+/*
+ * @Author : Sagar Gaikwad
+ * @Created On 8/06/2019
+ * 
+ * Main class
+ * */
 public class MoneyTransferApp {
 
 	public static void main(String argc[]) {
