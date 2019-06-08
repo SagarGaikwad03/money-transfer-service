@@ -85,9 +85,7 @@ http://localhost:4567/account?accountId=73df405e-7fe9-4d4a-82ee-f7a3bf34026f&amo
 PUT /account HTTP/1.1
 Accept: application/json
 Host: localhost:4567
-Query Param: accountId=73df405e-7fe9-4d4a-82ee-f7a3bf34026f
-             amount=75
-             transaction=Withdraw
+Query Param: accountId=73df405e-7fe9-4d4a-82ee-f7a3bf34026f&amount=75&transaction=Withdraw
 ```
 
 * HTTP Response:
