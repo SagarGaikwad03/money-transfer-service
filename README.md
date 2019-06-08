@@ -21,6 +21,7 @@ Standalone service for money transfer between account.
 
 ## Build and Unit test
 - mvn clean install
+ ```
   It run all the test cases which includes
   - Repository unit test
   - End point unit test
