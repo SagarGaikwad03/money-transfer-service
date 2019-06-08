@@ -11,7 +11,7 @@ Standalone service for money transfer between account.
 - Delete account
 
 ## Technology stack
-- Java 8
+- Java 8[Java 8](https://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
 - Maven
 - Spark Framework
 - Lombok
