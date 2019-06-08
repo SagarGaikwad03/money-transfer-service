@@ -2,7 +2,7 @@
 Standalone service for money transfer between account.
 
 ## Feature
-- Create Account
+- Create account
 - Get account
 - Withdraw money
 - Deposit money
