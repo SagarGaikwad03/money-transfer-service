@@ -17,7 +17,7 @@ Standalone service for money transfer between account.
 - [Lombok](https://www.baeldung.com/intro-to-project-lombok)
 - GSON
 - [JUnit](https://en.wikipedia.org/wiki/JUnit)
-- Spark Test
+- Spark Route Test
 
 ## Build and Unit test
 - mvn clean install
