@@ -1,8 +1,8 @@
 package org.revolut.bank.repository;
 
-import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.revolut.bank.dao.Account;
 import org.revolut.bank.dao.Transaction;
@@ -19,7 +19,7 @@ public class TransactionRepository implements ITransactionRepository {
 	
 	private Logger LOGGER = LoggerFactory.getLogger(TransactionRepository.class);
 
-	private final Queue<Transaction> transactions = new LinkedList<Transaction>();
+	private final Queue<Transaction> transactions = new ConcurrentLinkedQueue<Transaction>();
 	private IAccountRepository accountRepository;
 
 	public TransactionRepository(IAccountRepository accountRepository) {

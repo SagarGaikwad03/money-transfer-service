@@ -2,8 +2,8 @@ package org.revolut.bank.repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.jetty.util.StringUtil;
 import org.revolut.bank.dao.Account;
@@ -25,7 +25,7 @@ public class AccountRepository implements IAccountRepository {
 	private Logger LOGGER = LoggerFactory.getLogger(AccountRepository.class);
 
 
-	private final Map<String, Account> accounts = new HashMap<String, Account>();
+	private final Map<String, Account> accounts = new ConcurrentHashMap<String, Account>();
 
 	@Override
 	public Account createAccount(Account account) throws AccountDoesNotExistsException {

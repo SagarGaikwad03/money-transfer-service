@@ -40,7 +40,7 @@ public class ConcurrentTransactionRepositoryTest {
 
 		waiter = new Waiter();
 
-		executorService = Executors.newFixedThreadPool(3);
+		executorService = Executors.newFixedThreadPool(100);
 
 	}
 
@@ -58,21 +58,25 @@ public class ConcurrentTransactionRepositoryTest {
 		accountRepository.createAccount(fromAccount);
 		accountRepository.createAccount(toAccount);
 
-		Transaction t1 = createTransaction(fromAccount.getAccountId(), toAccount.getAccountId(), new BigDecimal("50"));
+		/*Transaction t1 = createTransaction(fromAccount.getAccountId(), toAccount.getAccountId(), new BigDecimal("50"));
 		Transaction t2 = createTransaction(fromAccount.getAccountId(), toAccount.getAccountId(), new BigDecimal("50"));
 		Transaction t3 = createTransaction(fromAccount.getAccountId(), toAccount.getAccountId(), new BigDecimal("50"));
+		*/for(int i =0 ; i<100; i++) {
+			executorService.submit(() -> processTransactions(createTransaction(fromAccount.getAccountId(), toAccount.getAccountId(), new BigDecimal("10"))));
 
-		executorService.submit(() -> processTransactions(t1));
+		}
+
+		/*executorService.submit(() -> processTransactions(t1));
 		executorService.submit(() -> processTransactions(t2));
 		executorService.submit(() -> processTransactions(t3));
-
-		waiter.await(5, TimeUnit.SECONDS, 3);
+*/
+		waiter.await(3, TimeUnit.SECONDS, 100);
 
 		Account updatedFromAcccount = accountRepository.getAccountById(fromAccount.getAccountId());
 		Account updatedToAccount = accountRepository.getAccountById(toAccount.getAccountId());
 
-		assertEquals(fromAccount.getBalance().subtract(new BigDecimal("150")), updatedFromAcccount.getBalance());
-		assertEquals(toAccount.getBalance().add(new BigDecimal("150")), updatedToAccount.getBalance());
+		assertEquals(fromAccount.getBalance().subtract(new BigDecimal("1000")), updatedFromAcccount.getBalance());
+		assertEquals(toAccount.getBalance().add(new BigDecimal("1000")), updatedToAccount.getBalance());
 	}
 
 	private void processTransactions(Transaction transaction) {
